@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}	    
+
+<div class="container-fluid">
+        <div class="row p-4">
+            
+            <div class="col-md-12">
+                <!-- Cart Items -->
+                    <h1>Shopping wish list</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loop through cart items -->
+                            {% for item in wish %}
+                            <tr>
+                                <td>{{ item.productname }}</td>
+                                <td>{{ item.productprice }}</td>
+                                <td>
+                                    {{ item.quantity }}
+                                </td>
+                                <td>{{ item.totalproductprice }}</td>
+                                <td>
+                                    <button class="btn btn-danger remove-btn" onclick="location.href='{% url "index:w_delete_item" item.cartId %}'">Remove</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary " onclick="location.href='{% url 'index:buypage' item_id=item.productId %}'">View product</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <a href="{% url 'index:index' %}" class="btn btn-secondary">Continue Shopping</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+	{% endblock %}

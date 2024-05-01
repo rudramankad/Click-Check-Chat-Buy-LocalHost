@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Users Table
+                </div>
+                <div class="card-body">
+                    {% comment %} <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search..."> {% endcomment %}
+                    <div class="table-responsive">
+                        <table id="userTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.</th>
+                                    <th scope="col">Sender</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Chat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sender_info in senders_info %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ sender_info.get_full_name }}</td>
+                                    <td>{{ sender_info.email }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{% url 'index:chat' sender_info.pk %}">Chat</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

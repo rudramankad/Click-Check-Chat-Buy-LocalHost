@@ -1,0 +1,12 @@
+Django==4.1.13; python_version >= '3.8'
+Django==3.2.18; python_version < '3.8'
+django-environ==0.10.0
+google-cloud-secret-manager==2.16.1
+gunicorn==20.1.0
+Pillow
+whitenoise
+psycopg2-binary
+django-cockroachdb==4.1.1
+mysqlclient
+paypalrestsdk
+

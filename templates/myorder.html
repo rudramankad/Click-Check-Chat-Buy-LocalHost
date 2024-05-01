@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+    <head>
+        <title> My orders</title>
+
+        <!-- Meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!-- Google fonts -->
+        <link href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+
+        <!-- CSS Stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %} " type="text/css" media="all" />
+
+    </head>
+
+    <body>
+        <div class="w3l-loginblock signinform">
+            <div class="logo">
+                <a class="brand-logo" href="{% url "index:myorder" %}">My Orders</a>
+            </div>
+            <!-- Main content -->
+            <div class="row map-content-9">
+                <form method="post" class="">
+                    {% csrf_token %}
+                    <div class="info-grids">
+                        {% if prolist %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Order Image</th>
+                                        <th>Order ID</th>
+                                        <th>Order Name</th>
+                                        <th>Order Date</th>
+                                        <!-- <th>Product ID</th> -->
+                                        <th>Product Quantity</th>
+                                        <th>Transaction ID</th>
+                                        <th>Payment Method</th>
+                                        <th>Order Amount</th>
+                                        <!-- Add more table headers for other order attributes -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in prolist %}
+                                    <tr>
+                                        {% if order.image_encoded %}
+                                       <td> <img src="data:image/png;base64, {{ order.image_encoded }}" alt="Product Image" width="100" height="100"></td>
+                                        {% else %}
+                                        <td><img src="{{ order.img.url }}" alt="Product Image" width="100" height="100"></td>
+
+                                        {% endif %}
+
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.name }}</td>
+                                        <td>{{ order.orderDate }}</td>
+                                        <!-- <td>{{ order.productid }}</td> -->
+                                        <td>{{ order.productqty }}</td>
+                                        <td>{{ order.transactionId }}</td>
+                                        <td>{{ order.paymentMethod }}</td>
+                                        <td>{{ order.orderAmount }}</td>
+                                        <!-- Add more table cells for other order attributes -->
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p>No orders found.</p>
+                        {% endif %}
+                    
+                    </div>
+                </form>
+            </div>
+
+            <!-- {% if message %}
+                <script>alert("{{message}}")</script>{% endif %} -->
+
+        </div>
+        <!-- //main content -->
+
+        </div>
+
+        <!-- fontawesome v5-->
+        <script src="{% static 'js/fontawesome.js' %} "></script>
+
+    </body>
+
+</html>
+
+{% endblock %}

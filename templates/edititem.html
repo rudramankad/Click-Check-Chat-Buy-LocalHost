@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <br><br>
+
+    <!-- The main container -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="item-form">
+                    <h2 class="text-center">Edit Item</h2>
+                    <form action="{% url 'index:edit_item' item.pk  %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="item_name" class="form-label">Item Name</label>
+                            <input type="text" class="form-control" id="item_name" name="name" value="{{ item.name }}" placeholder="Enter item name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Item Category</label>
+                            <select class="form-control" id="category" name="category">
+                                {% for cat in category %}
+                                    <option value="{{ cat.name }}" {% if cat.name == item.category %}selected{% endif %}>{{ cat.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Item Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter item description">{{ item.description }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Item Price</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ item.price }}" placeholder="Enter item price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="condition" class="form-label">Item Condition</label>
+                            <select class="form-control" id="condition" name="condition">
+                                <option value="New" {% if item.condition == 'New' %}selected{% endif %}>New</option>
+                                <option value="Used - Excellent" {% if item.condition == 'Used - Excellent' %}selected{% endif %}>Used - Excellent</option>
+                                <option value="Used - Good" {% if item.condition == 'Used - Good' %}selected{% endif %}>Used - Good</option>
+                                <option value="Used - Fair" {% if item.condition == 'Used - Fair' %}selected{% endif %}>Used - Fair</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            {% if item.image_encoded %}
+                            <img src="data:image/png;base64, {{ item.image_encoded }}" class="card-img-top img-fluid border border-2" alt="{{ item.name }}" height="550px">
+                            {% else %}
+                            <img src="{{ item.photos.url }}" class="card-img-top img-fluid border border-2" alt="{{ item.name }}" height="550px">
+                            {% endif %}
+                        </div>
+                    
+                        <!-- File input for uploading a new image -->
+                        <div class="mb-3">
+                            <label for="photos" class="form-label">Item Photos</label>
+                            <input type="file" class="form-control" id="photos" name="photos">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

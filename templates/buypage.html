@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}			
+			<div class="col-md-1"></div>
+			<div class="col-md-12">
+				<!-- Item details starts here -->
+				<div class="card mb-3 p-2" style="margin: 20px auto auto auto; width: 50%; height: auto;">
+					<div class="card-body">
+						<h3 class="card-title">{{ item.name }}</h3>
+						<br>
+						
+						<!-- Display item image with responsive class -->
+						{% if item.image_encoded %}
+						<img src="data:image/png;base64, {{ item.image_encoded }}" class="card-img-top img-fluid border border-2" alt="{{ item.name }}" height="550px">
+						{% else %}
+						<img src="{{ item.photos.url }}" class="card-img-top img-fluid border border-2" alt="{{ item.name }}" height="550px">
+						{% endif %}
+						<p class="card-text mt-3">{{ item.description }}</p>
+						<p class="card-text mt-3"><b>Item Category:&nbsp</b>{{ item.category }}</p>
+						<p class="card-text mt-3"><b>Item Condition:&nbsp</b>{{ item.condition }}</p>
+
+						<p class="card-text mt-3"><b>Price:&nbsp</b>{{ item.price }}</p>
+						
+						<!-- Chat with seller form -->
+						{% if request.user != item.seller_id %}
+						<div style="display: inline-block;">
+							<a class="btn btn-primary" href="{% url 'index:chat' item.seller_id.pk %}">Chat with seller</a>
+							<form action="{% url 'index:wishlist_item' item.pk %}" method="post" style="display: inline;">
+								{% csrf_token %}
+								<input type="hidden" name="item_price" value="{{ item.price }}">
+								
+								<button type="submit" class="btn btn-primary">Add to wishlist</button>
+							</form>
+							<form action="{% url 'index:buy' %}" method="post" style="display: inline;">
+								{% csrf_token %}
+								<input type="hidden" name="item_id" value="{{ item.pk }}">
+								<button type="submit" class="btn btn-primary">Buy now</button>
+							</form>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			
+
+			<!-- Items part ends here-->
+		</div>
+	</div>
+
+	{% endblock %}

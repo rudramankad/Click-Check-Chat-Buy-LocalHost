@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% if items %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in items %}
+            <div class="col">
+                <div class="card h-100">
+                    <a href="{% url 'index:buypage' item_id=item.item_id %}">
+                        <img
+                            src="data:image/png;base64, {{ item.image_encoded }}"
+                            alt="{{ item.name }}"
+                            class="card-img-top"
+                            width="200"
+                            height="200"
+                        />
+                    </a>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">{{ item.description }}</p>
+                        <p class="card-text">{{ item.condition }}</p>
+                        <p class="card-text">
+                            <strong>Price: {{ item.price }}</strong>
+                        </p>
+                        {% comment %} <button type="button" class="btn btn-primary">
+                            Buy Now
+                        </button> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+<div class="alert alert-info" role="alert">
+No products available.
+</div>
+{% endif %}
+</div>
+
+<div class="col-md-9">
+    
+</div>
+</div>
+</div>
+
+{% endblock  %}
+
