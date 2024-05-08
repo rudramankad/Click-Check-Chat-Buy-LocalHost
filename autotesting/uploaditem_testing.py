@@ -1,0 +1,49 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+chromedriver_path = "C:\\downloads\\chromedriver.exe"
+
+implicit_wait_time = 3
+
+url = 'https://southern-lane-419906.uc.r.appspot.com/uploaditem/'
+
+driver = webdriver.Chrome(executable_path=chromedriver_path)
+
+driver.implicitly_wait(implicit_wait_time)
+
+driver.get(url)
+
+expected_title = "Add Item"
+assert driver.title == expected_title, f"Expected title: {expected_title}, Actual title: {driver.title}"
+
+item_name_field = driver.find_element(By.ID, "item_name")
+
+assert item_name_field.is_displayed(), "Item Name field is not displayed"
+
+category_dropdown = driver.find_element(By.ID, "category")
+
+assert category_dropdown.is_displayed(), "Category dropdown is not displayed"
+
+item_description_field = driver.find_element(By.ID, "description")
+
+assert item_description_field.is_displayed(), "Description field is not displayed"
+
+item_price_field = driver.find_element(By.ID, "price")
+
+assert item_price_field.is_displayed(), "Price field is not displayed"
+
+item_condition_dropdown = driver.find_element(By.ID, "condition")
+
+assert item_condition_dropdown.is_displayed(), "Condition dropdown is not displayed"
+
+image_upload_field = driver.find_element(By.ID, "photos")
+
+assert image_upload_field.is_displayed(), "Upload photos field is not displayed"
+
+add_item_button = driver.find_element(By.TAG_NAME, "button")
+
+assert add_item_button.is_displayed(), "Add Item button is not displayed"
+
+driver.quit()
